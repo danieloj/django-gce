@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - image: postgres:latest
+          name: postgres
+          env:
+            - name: POSTGRES_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+          ports:
+            - containerPort: 3306
+              name: postgres
+          volumeMounts:
+            - name: postgres-persistent-storage
+              mountPath: /var/lib/postgres
+      volumes:
+        - name: postgres-persistent-storage
+          gcePersistentDisk:
+            pdName: postgres-disk
+            fsType: ext4
