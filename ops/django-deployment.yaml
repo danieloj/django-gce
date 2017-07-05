@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: django
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: django
+        tier: frontend
+    spec:
+      containers:
+      - name: django
+        image: gcr.io/django-172117/djangodocker:v2
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
