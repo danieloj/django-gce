@@ -13,6 +13,14 @@ spec:
       containers:
       - name: django
         image: gcr.io/django-172117/djangodocker:v2
+        env:
+          - name: DJANGO_DB_HOST
+            value: postgres:3306
+          - name: DJANGO_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: password
         resources:
           requests:
             cpu: 100m
