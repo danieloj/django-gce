@@ -1,5 +1,12 @@
 # Django stack on Google Container Engine
 
+## Database
+
+- gcloud compute disks create --size 200GB mysql-disk
+- kubectl create secret generic postgres --from-literal=password=PASSWORD
+- kubectl create -f postgres-deployment.yaml
+- kubectl create -f postgres-service.yaml
+
 ## Django
 
 - gcloud config set project PROJECT_ID
@@ -9,9 +16,3 @@
 - kubectl get pods -l app=django -l tier=frontend
 - kubectl create -f django-service.yaml
 - kubectl get service django
-
-## Database
-
-- gcloud compute disks create --size 200GB mysql-disk
-- kubectl create secret generic postgres --from-literal=password=PASSWORD
-- 
