@@ -1,5 +1,16 @@
 # Django stack on Google Container Engine
 
+## Nginx
+
+- kubectl create -f nginx-deployment.yaml
+- kubectl create -f nginx-service.yaml
+- kubectl get service nginx
+
+## Ingress
+
+- kubectl create -f ingress.yaml
+- kubectl get service ingress
+
 ## Database
 
 - gcloud compute disks create --size 200GB mysql-disk
@@ -16,8 +27,3 @@
 - kubectl get pods -l app=django -l tier=frontend
 - kubectl create -f django-service.yaml
 - kubectl get service django
-
-## Ingress
-
-- kubectl create -f ingress.yaml
-- kubectl get service ingress
