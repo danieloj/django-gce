@@ -1,5 +1,9 @@
 # Django stack on Google Container Engine
 
+## Compute cluster
+
+- gcloud container clusters create django-cluster --num-nodes=2
+
 ## Nginx
 
 - kubectl create -f nginx-deployment.yaml
