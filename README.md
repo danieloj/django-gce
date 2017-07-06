@@ -2,6 +2,8 @@
 
 ## Compute cluster
 
+- gcloud config set project PROJECT_ID
+- gcloud config set compute/zone europe-west2-a
 - gcloud container clusters create django-cluster --num-nodes=2
 
 ## Nginx
@@ -13,20 +15,17 @@
 ## Ingress
 
 - kubectl create -f ingress.yaml
-- kubectl get service ingress
+- kubectl get ingress
 
 ## Database
 
-- gcloud compute disks create --size 200GB mysql-disk
+- gcloud compute disks create --size 200GB postgres-disk
 - kubectl create secret generic postgres --from-literal=password=PASSWORD
 - kubectl create -f postgres-deployment.yaml
 - kubectl create -f postgres-service.yaml
 
 ## Django
 
-- gcloud config set project PROJECT_ID
-- gcloud container clusters create django --num-nodes=3
-- gcloud container clusters list
 - kubectl create -f django-deployment.yaml
 - kubectl get pods -l app=django -l tier=frontend
 - kubectl create -f django-service.yaml
