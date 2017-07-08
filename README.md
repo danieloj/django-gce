@@ -30,3 +30,10 @@
 - kubectl get pods -l app=django -l tier=frontend
 - kubectl create -f django-service.yaml
 - kubectl get service django
+
+## Image
+
+- cd app
+- PROJECT_ID="$(gcloud config get-value project)"
+- docker build -t gcr.io/${PROJECT_ID}/djangodocker:latest .
+- gcloud docker -- push gcr.io/${PROJECT_ID}/djangodocker:latest
