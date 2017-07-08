@@ -37,3 +37,9 @@
 - PROJECT_ID="$(gcloud config get-value project)"
 - docker build -t gcr.io/${PROJECT_ID}/djangodocker:latest .
 - gcloud docker -- push gcr.io/${PROJECT_ID}/djangodocker:latest
+
+## SSH
+
+- kubectl exec -it django-3101373686-37skm -- /bin/bash
+
+## MAKEFILE
