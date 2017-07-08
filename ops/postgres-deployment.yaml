@@ -18,11 +18,13 @@ spec:
         - image: postgres:latest
           name: postgres
           env:
-            - name: POSTGRES_ROOT_PASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres
                   key: password
+            - name: PGDATA
+              value: /var/lib/postgres/data/pgdata
           ports:
             - containerPort: 3306
               name: postgres
