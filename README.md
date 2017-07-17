@@ -41,5 +41,9 @@
 ## SSH
 
 - kubectl exec -it django-3101373686-37skm -- /bin/bash
+- python manage.py migrate
+- python manage.py createsuperuser
+- kubectl exec -it postgres-3101373686-37skm -- /bin/bash
+- psql -Upostgres
 
 ## MAKEFILE
