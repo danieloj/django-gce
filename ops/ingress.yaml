@@ -6,11 +6,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /*
         backend:
           serviceName: django
           servicePort: 80
-      # - path: /
-      #   backend:
-      #     serviceName: nginx
-      #     servicePort: 80
