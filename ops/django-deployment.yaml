@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: django
-        image: gcr.io/django-172117/djangodocker:v14
+        image: gcr.io/django-172117/djangodocker:latest
         env:
           - name: DJANGO_DB_HOST
             value: postgres
