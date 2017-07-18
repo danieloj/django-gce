@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: python:3.5
+      - image: google/cloud-sdk:latest
     working_directory: ~/app
     steps:
       - checkout
@@ -20,3 +20,7 @@ jobs:
           command: |
             TAG=circle-$CIRCLE_BUILD_NUM
             docker build -t django-test/circleci-demo-docker:$TAG app
+      - run:
+          name: Gcloud
+          command: |
+            gcloud --version
