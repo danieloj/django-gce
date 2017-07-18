@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/app
+    docker:
+     - image: python:3.5
+    steps:
+     - checkout
+     - run: echo "hello world"
