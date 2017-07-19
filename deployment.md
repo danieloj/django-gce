@@ -44,7 +44,7 @@ What happens:
 - Run MiniKube
 
 ## Useful
-
+- !!!! https://cloud.google.com/container-builder/docs/quickstarts/dockerfile
 - https://cloud.google.com/container-registry/docs/managing#tagging_images
 - https://circleci.com/docs/2.0/building-docker-images/
 - https://circleci.com/blog/how-to-build-a-docker-image-on-circleci-2-0/
