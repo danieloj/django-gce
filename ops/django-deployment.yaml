@@ -14,12 +14,21 @@ spec:
       - name: django
         image: gcr.io/django-172117/djangodocker:latest
         env:
+          - name: DJANGO_DB_NAME
+            value: mysql
           - name: DJANGO_DB_HOST
-            value: postgres
+            value: '127.0.0.1'
+          - name: DJANGO_DB_PORT
+            value: '3306'
+          - name: DJANGO_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: cloudsql-db-credentials
+                key: username
           - name: DJANGO_DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgres
+                name: cloudsql-db-credentials
                 key: password
         resources:
           requests:
@@ -27,3 +36,20 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 80
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.09
+        command: ["/cloud_sql_proxy", "--dir=/cloudsql",
+                  "-instances=[django-172117:europe-west2:django-db]=tcp:3306",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        volumeMounts:
+          - name: cloudsql-instance-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+          - name: cloudsql
+            mountPath: /cloudsql
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+        - name: cloudsql
+          emptyDir:
