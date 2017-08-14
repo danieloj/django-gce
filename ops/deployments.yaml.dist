@@ -1,0 +1,73 @@
+# Application server
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ${APPLICATION_NAME}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ${APPLICATION_NAME}
+        tier: frontend
+    spec:
+      containers:
+      - name: ${APPLICATION_NAME}
+        # image: gcr.io/django-172117/djangodocker:latest
+        image: gcr.io/${PROJECT_ID}/djangodocker:latest
+        env:
+          - name: DJANGO_DB_HOST
+            value: postgres
+          - name: DJANGO_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: password
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
+
+# Database
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: ${APPLICATION_NAME}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${APPLICATION_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${APPLICATION_NAME}
+    spec:
+      containers:
+        - image: postgres:latest
+          name: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+            - name: PGDATA
+              value: /var/lib/postgres/data/pgdata
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - name: postgres-persistent-storage
+              mountPath: /var/lib/postgres
+      volumes:
+        - name: postgres-persistent-storage
+          gcePersistentDisk:
+            pdName: postgres-disk
+            fsType: ext4
+
+# Static files

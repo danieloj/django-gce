@@ -1,0 +1,44 @@
+
+# Load balancer
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: loadBalancer
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: ${APPLICATION_NAME}
+          servicePort: 80
+
+# Application server
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${APPLICATION_NAME}
+  labels:
+    app: ${APPLICATION_NAME}
+    tier: frontend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: ${APPLICATION_NAME}
+    tier: frontend
+
+# Database server
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: ${APPLICATION_NAME}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+  selector:
+    app: postgres
