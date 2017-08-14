@@ -38,5 +38,8 @@ jobs:
       - run:
           name: Deploy the new image to the Django deployment
           command: |
-            sed -i -e 's/:latest/:'"${CIRCLE_SHA1}"'/g' ops/django-deployment.yaml
-            kubectl apply -f ops/django-deployment.yaml
+            sed -i -e 's/:latest/:'"${CIRCLE_SHA1}"'/g' ops/deployments.yaml
+            sed -i -f ops/populate_config.se ops/deployments.yaml
+            sed -i -f ops/populate_config.se ops/services.yaml
+            kubectl apply -f ops/services.yaml
+            kubectl apply -f ops/deployments.yaml

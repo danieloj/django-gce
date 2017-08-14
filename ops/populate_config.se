@@ -1,0 +1,2 @@
+s/\${APPLICATION_NAME}/csi/
+s/\${PROJECT_ID}/django-172117/
