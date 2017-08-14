@@ -18,11 +18,17 @@ spec:
         env:
           - name: DJANGO_DB_HOST
             value: postgres
+          - name: DJANGO_DB_NAME
+            value: ${APPLICATION_NAME}
           - name: DJANGO_DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: postgres
                 key: password
+          - name: DJANGO_DB_PORT
+            value: '5432'
+          - name: DJANGO_DB_USER
+            value: postgres
         resources:
           requests:
             cpu: 100m
