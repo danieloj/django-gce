@@ -36,6 +36,13 @@ jobs:
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
             gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME_PRODUCTION}
       - run:
+          name: Deploy the static files
+          command: |
+            docker run -d --name app gcr.io/${GOOGLE_PROJECT_ID}/djangodocker:${CIRCLE_SHA1}
+            docker exec -it app bash -c 'python manage.py collectstatic --noinput'
+            docker cp app:/app/docker/static /static
+            gsutil rsync -R /static/ gs://${GOOGLE_PROJECT_ID}/static
+      - run:
           name: Deploy the new image to the Django deployment
           command: |
             sed -i -e 's/:latest/:'"${CIRCLE_SHA1}"'/g' ops/django-deployment.yaml
