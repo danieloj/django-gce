@@ -75,12 +75,12 @@ WSGI_APPLICATION = 'docker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DJANGO_DB_NAME'),
         'USER': os.environ.get('DJANGO_DB_USER'),
         'HOST': os.environ.get('DJANGO_DB_HOST'),
         'PORT': os.environ.get('DJANGO_DB_PORT'),
-        # 'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),
+        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),
     }
 }
 

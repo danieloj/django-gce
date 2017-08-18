@@ -17,7 +17,7 @@ spec:
           - name: DJANGO_DB_HOST
             value: postgres
           - name: DJANGO_DB_NAME
-            value: django
+            value: postgres
           - name: DJANGO_DB_PASSWORD
             valueFrom:
               secretKeyRef:
