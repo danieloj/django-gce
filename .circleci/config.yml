@@ -39,4 +39,8 @@ jobs:
           name: Deploy the new image to the Django deployment
           command: |
             sed -i -e 's/:latest/:'"${CIRCLE_SHA1}"'/g' ops/django-deployment.yaml
+            kubectl apply -f ops/ingress.yaml
+            kubectl apply -f ops/postgres-service.yaml
+            kubectl apply -f ops/django-service.yaml
+            kubectl apply -f ops/postgres-deployment.yaml
             kubectl apply -f ops/django-deployment.yaml
